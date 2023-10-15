@@ -154,6 +154,7 @@ export class App {
                         event.returnValue = true;
                     });
                     this._presetPage.preset = false;
+                    this.scene.NewKnot();
                     this.scene.knotMenu.Disable(false);
                     this.run();
                 }else{
@@ -174,11 +175,6 @@ export class App {
 
 
     private initCallbacks() {
-
-        
-
-        this._infoPage.btn.addEventListener('click', () => {this._infoPage.overlay.classList.toggle("hidden", false); this._infoPage.hidden = false;})
-        this._infoPage.exit.addEventListener('click', () => {this._infoPage.overlay.classList.toggle("hidden", true); this._infoPage.hidden = true;})
 
         this.canvas.addEventListener('mousedown', (event) => {this.mouseDown(event);});
 

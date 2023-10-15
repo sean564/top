@@ -11,32 +11,27 @@ type SceneType = "Linked Knot" | "Fourier Knot" | "Quintuples";
 
 export class Scene{
 
-    private _linkedKnot : LinkedKnot;
+    private _linkedKnot! : LinkedKnot;
     private _fourierKnot : FourierKnot;
     private _webGPUCalc : WebGPUCalc;
     private _quintpules : Quintuples;
 
     private _freeze : boolean;
 
-    private _knotMenu : KnotMenu;
-    private _loader : Loader;
+    private _knotMenu! : KnotMenu;
+    private _loader! : Loader;
 
     private _exportData : HTMLElement | null;
 
 
     constructor(){
 
-        this._loader = new Loader();
-        this._loader.initCallback();
-        this._linkedKnot = new LinkedKnot();
+        
         this._fourierKnot = new FourierKnot();
         this._quintpules = new Quintuples();
         this._webGPUCalc = new WebGPUCalc();
 
         this._freeze = false;
-
-        this._knotMenu = new KnotMenu(this);
-        this._knotMenu.initCallback();
 
         this._exportData = document.getElementById("export-data");
         this._exportData?.addEventListener("click", () =>{this.exportData();})
@@ -89,6 +84,15 @@ export class Scene{
             this._knotMenu.sceneType = "Fourier Knot";
         }
         this._freeze = false;
+    }
+
+    public NewKnot(){
+        this._loader = new Loader();
+        this._loader.initCallback();
+        this._linkedKnot = new LinkedKnot();
+
+        this._knotMenu = new KnotMenu(this);
+        this._knotMenu.initCallback();
     }
 
     public setPresetData(frames : Frames, knotDivision: number, nodeArr : vec3[]){
@@ -258,7 +262,6 @@ export class KnotMenu{
         }
 
         this.cancelBtnResponse();
-        this.sceneSelect();
 
     }
 

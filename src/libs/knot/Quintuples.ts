@@ -70,6 +70,7 @@ export class Quintuples{
     public setFrameData(frames : Frames, knotDivision : number){
 
         this.frames = frames;
+        this.player.Disable(false);
         this.player.max = knotDivision;
         this.player.reset();
            
@@ -237,11 +238,9 @@ export class Player{
     }
 
     public Disable(disable : boolean){
-        if(disable === true){
-            this.videoControls.classList.toggle('hidden', true);
-        } else {
-            this.videoControls.classList.toggle('hidden', false);
-        }
+        
+        this.videoControls.classList.toggle('hidden', disable);
+        
     }
 
     public resize(){
