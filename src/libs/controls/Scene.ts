@@ -175,10 +175,10 @@ export class Scene{
 
     private exportData() {
         const data = {
+            wrongPolyList : this.webGPUCalc.wrongPoly,
             frames : this.quintuples.frames,
             knotDivision : this.quintuples.player.max,
             nodeArr : <vec3[]>this.linkedKnot.nodeArr,
-            wrongPolyList : this.webGPUCalc.wrongPoly
         };
       
         const a = document.createElement("a");

@@ -378,7 +378,7 @@ export class WebGPUCalc{
     public async findCircles(quintuples : Quintuples, doubleCheck: boolean, maxCircles: number, knotDivision: number, loader : Loader){
 
         loader.text = (0).toFixed(1) + " %";
-        await Loader.timeout(100);
+        await Loader.timeout(10);
 
         this._bufferSize = 5985 * 5 * knotDivision/2/GPUloop;
         const KI = this.KI();
@@ -532,7 +532,7 @@ export class WebGPUCalc{
             }
 
             loader.text = (calc_iter*100/GPUloop).toFixed(1) + " %";
-            await Loader.timeout(100);
+            await Loader.timeout(10);
             if(loader.cancel){
                 return;
             }
@@ -601,14 +601,14 @@ export class WebGPUCalc{
         }
 
 
-        this._calc.ACPolyAve = Math.round(this._calc.ACPolyAve/knotDivision);
+        this._calc.ACPolyAve = Math.round(this._calc.ACPolyAve/knotDivision*2);
         ACPolyOpt[(this._calc.ACPolyAve +1)%2]=ACPolyOpt[(this._calc.ACPolyAve +1)%2].sort(function(a: number, b: number){return a - b});
         this._calc.WrongPoly = ACPolyOpt[(this._calc.ACPolyAve +1)%2];
 
         if(doubleCheck){
 
             loader.text = "verifying number of circles";
-            await Loader.timeout(100);
+            await Loader.timeout(10);
 
 
             const wrongACPoly = ACPolyOpt[(this._calc.ACPolyAve +1)%2];
@@ -634,7 +634,7 @@ export class WebGPUCalc{
                         rightIndex = mod(rightIndex-1, knotDivision);
                     }
                     doubiter++;
-                }while((doubiter < 10) && (temp_data[maxIndex].length != this._calc.ACPolyAve))
+                }while((doubiter < 10) && (temp_data[maxIndex].length%2 != this._calc.ACPolyAve))
                 
 
                 let temp : number[];
@@ -651,10 +651,12 @@ export class WebGPUCalc{
                 if(temp_data[frameIndex].length%2 != this._calc.ACPolyAve){
                     doubiter = 0;
 
-                    while((doubiter < 10) && (temp_data[leftIndex].length != this._calc.ACPolyAve)){
+                    while((doubiter < 10) && (temp_data[leftIndex].length%2 != this._calc.ACPolyAve)){
+                        doubiter++;
                         leftIndex = mod(leftIndex-1, knotDivision);
                     }
                     maxIndex = leftIndex;
+                    tempDoubleCheckData = [];
                     for(let j = 0; j< temp_data[maxIndex].length; j++){
                         temp = temp_data[maxIndex][j];
                         tempDoubleCheckData.push([frameIndex/knotDivision, temp[1], temp[2], temp[3], temp[4]]);
@@ -677,7 +679,7 @@ export class WebGPUCalc{
 
 
         loader.text = "creating buffers";
-        await Loader.timeout(100);
+        await Loader.timeout(10);
 
         this._calculated = false;
 
