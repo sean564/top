@@ -95,7 +95,7 @@ export class Scene{
 
     public async setPresetData(frames : Frames, knotDivision: number, nodeArr : vec3[]){
         const loader = document.getElementById("loader2");
-        loader?.classList.toggle("hidden", false);
+        loader?.classList.toggle("hidden", true);
         await Loader.timeout(10);
         this._knotMenu.sceneType = "Quintuples";
         this.fourierKnot.calcFourierFromLinked(nodeArr);
