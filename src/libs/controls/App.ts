@@ -176,6 +176,7 @@ export class App {
 
     private initCallbacks() {
 
+    
         this.canvas.addEventListener('mousedown', (event) => {this.mouseDown(event);});
 
         document.addEventListener("mouseup", (event : MouseEvent) => {this.mouseUp(event);});
