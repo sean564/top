@@ -64,6 +64,10 @@ export class Loader{
         return this._cancel;
     }
 
+    public static timeout(ms : number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
 }
 
 export class DropDown{

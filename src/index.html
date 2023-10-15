@@ -183,7 +183,10 @@
             <div id="loader" class="loader hidden">
                 <div class="loader overlay"></div>
                 <div class="loader box">
-                    <div class="loader spinner"></div>
+                    <!-- <div class="loader spinner"></div> -->
+                    <div style="width:80px;height:80px;opacity:1;position:absolute;left:0px;right:0px;top:0px;bottom:120px;margin:auto">
+                        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                    </div>
                     <div class="loader text" id="loader text">loading</div>
                     <div style="display:flex;justify-content:center;flex-flow:row wrap;left:0px;right:0px;top:230px;margin:auto;position:absolute">
                         <button id="quit" class="button">Quit Calculations</button>
@@ -199,6 +202,8 @@
                     </div>
                 </div>
             </div>
+
+            
 
             <div id="video-controls" class="controls hidden">
                 <div>
@@ -233,6 +238,14 @@
             <!-- <button id="export-data" class="button" style = "position: absolute; left : 20px; top:20px; width :40px; height :20px; background-color: rgb(53, 53, 255);">Export Data</button>
             <input type="file" id="link-data" class="button" style = "position: absolute; left : 20px; top:50px; width :40px; height :20px; background-color: rgb(53, 53, 255);" value="choose file" accept="text/plain"></button> -->
         
+        </div>
+
+        <div id="loader2" class="hidden">
+            <div class="overlay"></div>
+            <div style="width:80px;height:80px;opacity:1;position:absolute;left:0px;right:0px;top:0px;bottom:0px;margin:auto">
+                <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
+            
         </div>
 
         

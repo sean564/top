@@ -22,9 +22,7 @@ function sin(t: number) {
 
 type vec5 = [number, number, number, number, number];
 
-function timeout(ms : number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+
 function mod(n: number, m: number) {
     return ((n % m) + m) % m;
 }
@@ -380,7 +378,7 @@ export class WebGPUCalc{
     public async findCircles(quintuples : Quintuples, doubleCheck: boolean, maxCircles: number, knotDivision: number, loader : Loader){
 
         loader.text = (0).toFixed(1) + " %";
-        await timeout(100);
+        await Loader.timeout(100);
 
         this._bufferSize = 5985 * 5 * knotDivision/2/GPUloop;
         const KI = this.KI();
@@ -534,7 +532,7 @@ export class WebGPUCalc{
             }
 
             loader.text = (calc_iter*100/GPUloop).toFixed(1) + " %";
-            await timeout(100);
+            await Loader.timeout(100);
             if(loader.cancel){
                 return;
             }
@@ -610,7 +608,7 @@ export class WebGPUCalc{
         if(doubleCheck){
 
             loader.text = "verifying number of circles";
-            await timeout(100);
+            await Loader.timeout(100);
 
 
             const wrongACPoly = ACPolyOpt[(this._calc.ACPolyAve +1)%2];
@@ -679,7 +677,7 @@ export class WebGPUCalc{
 
 
         loader.text = "creating buffers";
-        await timeout(100);
+        await Loader.timeout(100);
 
         this._calculated = false;
 

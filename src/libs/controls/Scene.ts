@@ -62,6 +62,7 @@ export class Scene{
             }
 
             this._loader.load(true);
+            await Loader.timeout(10);
 
             this._webGPUCalc.initKnot(this.fourierKnot.exportKIArr());
             await this._webGPUCalc.findCircles(this.quintuples, this._knotMenu.doubleCheck, this._knotMenu.maxCircles, this._knotMenu.knotDivision, this._loader);
@@ -92,10 +93,15 @@ export class Scene{
     }
 
 
-    public setPresetData(frames : Frames, knotDivision: number, nodeArr : vec3[]){
+    public async setPresetData(frames : Frames, knotDivision: number, nodeArr : vec3[]){
+        const loader = document.getElementById("loader2");
+        loader?.classList.toggle("hidden", false);
+        await Loader.timeout(10);
         this._knotMenu.sceneType = "Quintuples";
         this.fourierKnot.calcFourierFromLinked(nodeArr);
         this.quintuples.setFrameData(frames, knotDivision);
+        loader?.classList.toggle("hidden", false);
+        await Loader.timeout(3000);
 
     }
 
