@@ -6,6 +6,7 @@ import { vec3, vec4 } from "gl-matrix"
 import { Camera } from "../models/Camera"
 import { Light } from "../models/Light"
 import { Scene } from "./Scene"
+import { Loader } from "../controls/Overlay"
 
 
 const clickDist = 25;
@@ -162,9 +163,15 @@ export class App {
                     const myRequest = new Request(value?value:"");
                     fetch(myRequest)
                       .then((response) => response.json())
-                      .then((data) => {
+                      .then(async (data) => {
+                        const loader = document.getElementById("loader2");
+                        loader?.classList.toggle("hidden", true);
+                        await Loader.timeout(10);
                         this.scene.setPresetData(data.frames, data.knotDivision, data.nodeArr);
                         this._presetPage.preset = true;
+                        loader?.classList.toggle("hidden", false);
+                        await Loader.timeout(3000);
+                        
                         this.run();
                     }).catch(console.error);
                 }
@@ -229,6 +236,7 @@ export class App {
     private run(){
 
         this._presetPage.presetOverlay.classList.toggle('hidden', true);
+
         document.getElementById("container")?.classList.toggle('hidden', false);
 
         
