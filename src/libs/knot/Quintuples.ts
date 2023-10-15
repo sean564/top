@@ -190,12 +190,7 @@ export class Player{
     private playBtnResponse() {
         // Play/Pause button
         this._animation.play = !this._animation.play;
-        if (this._animation.play) {
-            this.playpause.setAttribute('data-state', 'play');
-        }
-        else {
-            this.playpause.setAttribute('data-state', 'pause');
-        }
+        
 
     }
 
@@ -241,6 +236,11 @@ export class Player{
 
     set play(bool : boolean){
         this._animation.play = bool;
+        if (this._animation.play) {
+            this.playpause.setAttribute('data-state', 'play');
+        }else {
+            this.playpause.setAttribute('data-state', 'pause');
+        }
     }
 
     public Disable(disable : boolean){
@@ -277,6 +277,7 @@ export class WebGPUCalc{
     private _calc : {
         error_field : number;
         ACPolyAve : number;
+        WrongPoly : number[];
     }
 
     private _cosCoef : vec3[];
@@ -296,6 +297,7 @@ export class WebGPUCalc{
         this._calc = {
             error_field : 0.0000001,
             ACPolyAve : 0,
+            WrongPoly : [],
         }
 
         this._cosCoef = [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]];
@@ -365,6 +367,10 @@ export class WebGPUCalc{
 
     get calculated(){
         return this._calculated;
+    }
+
+    get wrongPoly(){
+        return this._calc.WrongPoly;
     }
 
     set calculated(bool : boolean){
@@ -598,6 +604,8 @@ export class WebGPUCalc{
 
 
         this._calc.ACPolyAve = Math.round(this._calc.ACPolyAve/knotDivision);
+        ACPolyOpt[(this._calc.ACPolyAve +1)%2]=ACPolyOpt[(this._calc.ACPolyAve +1)%2].sort(function(a: number, b: number){return a - b});
+        this._calc.WrongPoly = ACPolyOpt[(this._calc.ACPolyAve +1)%2];
 
         if(doubleCheck){
 
@@ -605,7 +613,8 @@ export class WebGPUCalc{
             await timeout(100);
 
 
-            const wrongACPoly = ACPolyOpt[(this._calc.ACPolyAve +1)%2].sort(function(a: number, b: number){return a - b});
+            const wrongACPoly = ACPolyOpt[(this._calc.ACPolyAve +1)%2];
+            this._calc.WrongPoly = [];
 
             for(let i = 0; i<wrongACPoly.length; i++){
 
@@ -655,6 +664,10 @@ export class WebGPUCalc{
     
                     tempDoubleCheckData = this.c5_ptolemy(tempDoubleCheckData);
                     temp_data[frameIndex] = this.removeDupe(tempDoubleCheckData, 0.002);
+                }
+
+                if(temp_data[frameIndex].length%2 != this._calc.ACPolyAve){
+                    this._calc.WrongPoly.push(frameIndex);
                 }
 
                 if(loader.cancel){

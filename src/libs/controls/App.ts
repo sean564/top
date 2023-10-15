@@ -241,8 +241,8 @@ export class App {
                 trans : [0,0,0],
             })
         }
-        this.initCallbacks();
         this.initGL();
+        this.initCallbacks();
         this.resizer();
         
         requestAnimationFrame(this.animate.bind(this));

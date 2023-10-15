@@ -64,7 +64,7 @@ export class Camera {
             normal : [0,0],
             toWorld :  mat4.create(),
         }
-        this._transformation = this._basePos.trans;
+        this._transformation = vec3.copy(vec3.create(), this._basePos.trans);
 
         this._mView = mat4.create();
         this._mProj = mat4.create();
@@ -83,6 +83,7 @@ export class Camera {
         trans : vec3;
     }){
         this._basePos = base;
+
         this._spherical = {
             theta : this._basePos.theta,
             phi : this._basePos.phi,
@@ -90,7 +91,6 @@ export class Camera {
         }
         this._transformation = this._basePos.trans;
         this.updateCameraPos();
-        this.setRay();
     }
 
     public update(gl : WebGLRenderingContext, program : WebGLProgram, width : number, height : number) {

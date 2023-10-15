@@ -175,7 +175,8 @@ export class Scene{
         const data = {
             frames : this.quintuples.frames,
             knotDivision : this.quintuples.player.max,
-            nodeArr : <vec3[]>this.linkedKnot.nodeArr
+            nodeArr : <vec3[]>this.linkedKnot.nodeArr,
+            wrongPolyList : this.webGPUCalc.wrongPoly
         };
       
         const a = document.createElement("a");
@@ -257,10 +258,8 @@ export class KnotMenu{
             submit : <HTMLElement>document.getElementById("confirm calculate"),
             cancel: <HTMLElement>document.getElementById("cancel calculate"),
         }
-
+        this.sceneType = "Linked Knot";
         this.cancelBtnResponse();
-        
-
     }
 
     public Disable(bool : boolean){
