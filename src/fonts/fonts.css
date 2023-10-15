@@ -1,0 +1,14 @@
+
+
+    @font-face {
+    font-family: 'Montserrat Subrayada';
+    font-weight: normal;
+    src: local('Montserrat Subrayada Regular'), url('MontserratSubrayada-Regular.woff') format('woff');
+    }
+    
+
+    @font-face {
+    font-family: 'Montserrat Subrayada';
+    font-weight: bold;
+    src: url('MontserratSubrayada-Bold.ttf') format('truetype');
+    }

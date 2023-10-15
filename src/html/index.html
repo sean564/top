@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href = "css/styles.css" rel = "stylesheet" type = "text/css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="displayColumn">
+
+        <!---HEADER FOR LOGO AND TITLE-->
+        <div id="header">
+            <span></span>
+        </div>
+
+        <div id="container">
+
+            <canvas id="gfx-main" width="400" height = "400"></canvas>
+            <div style ="position: absolute; top:5px;">fps: <span id="fps"></span></div>
+
+            <div id="drawing tool" class="drawing">
+                <div style ="display:flex;
+                justify-content: center;
+                gap: 30px;
+                flex-flow: row wrap;
+                height: 60px;
+                width: 100%;">
+                    <button class = "button img" id="insert button">
+                        <img src="img/insert.png" alt="Image">
+                        <span>insert</span>
+                    </button>
+                    <button class = "button img" id="connect button">
+                        <img src="img/connect.png" alt="Image">
+                        <span>connect</span>
+                    </button>
+                    <button class = "button img" id="subdivide button">
+                        <img src="img/subdivide.png" alt="Image">
+                        <span>subdivide</span>
+                    </button>
+                    <button class = "button img" id="erase button">
+                        <img src="img/eraser.png" alt="Image">
+                        <span>erase</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="delete check" class="loader" style="background:transparent; height:100%; width:100%">
+                <div style="display:flex;align-items:center;gap:40px;flex-flow:column wrap;left:0px;right:0px;top:0px;bottom:0px;height:150px;width:300px;margin:auto;position:absolute;
+                    background-color:white; opacity:1.0; justify-content: center;border-radius:5px;">
+                    <div id="delete text" style="font-size: 14px;"></div>
+                    <div style="display:flex;align-items:center;gap:50px;flex-flow:row nowrap;position:relative">
+                        <button id="delete confirm" class="button confirm" style="height:40px; width:80px;background-color: red; color:white;font-size: 14px;">Delete</button>
+                        <button id="delete cancel" class="button cancel" style="height:40px; width:80px;font-size: 14px;">Cancel</button>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div style="position: absolute; width:100%; height:30%;bottom:0px;">
+                <button class = "button scene-update" id="advance scene">Smoothen Knot
+                </button>
+                <button class = "button img" id="delete scene" style="position:absolute; left:20px;bottom:20px;background-color: rgba(255,255,255,0); box-shadow: none;">
+                    <img src="img/delete.png" alt="Image" style="opacity:0.6;">
+                    <span class="tooltip" style="color:red">delete</span>
+                </button>
+            </div>
+            <button class = "button img" id="camera button" style="position:absolute; right:20px;top:20px;background-color: rgba(255,255,255,0); box-shadow: none;">
+                <img src="img/camera.png" alt="Image" style="opacity:0.6;">
+                <span class="tooltip">reset camera position</span>
+            </button>
+        
+
+            <div id="loader" class="loader">
+                <div class="loader overlay"></div>
+                <div class="loader box">
+                    <div class="loader spinner"></div>
+                    <div id="loader text" class="loader text">loading</div>
+                    <div style="display:flex;justify-content:center;flex-flow:row wrap;left:0px;right:0px;top:250px;margin:auto;position:absolute">
+                        <button id="quit" class="button">Quit Calculations</button>
+                    </div>
+                    
+        
+                    <div id="double check" class="quit overlay">
+                        <div style="display:flex;justify-content:center;gap:120px;flex-flow:row wrap;left:0px;right:0px;top:250px;margin:auto;position:absolute">
+                            <button id="confirm" class="button confirm">Confirm</button>
+                            <button id="cancel" class="button cancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="video-controls" class="controls">
+                <div style="height:100%;
+                width:100%;
+                display:flex;
+                gap:20px;
+                align-items: center;
+                flex-flow: row nowrap;
+                justify-content: start;">
+                    <button id="playpause" type="button" data-state="play">
+                        <img src="img/play.png" alt="Image" style="opacity:0.6;" class="play">
+                        <img src="img/pause.png" alt="Image" style="opacity:0.6;" class="pause">
+                    </button>
+                    <div class="dropdown" style="flex:0 0 auto; width:75px; height:90%;">
+                        <button class="dropdown dropbtn" id="speed dropdown">X 1.0</button>
+                        <div class="dropdown content" id="dropdown overlay">
+                            <div style="display:flex; flex-flow:column nowrap; width:100%">
+                                <div class="dropdown element" id="speed x2"><span>X 2.0</span></div>
+                                <div class="dropdown element" id="speed x1"><span>X 1.0</span></div>
+                                <div class="dropdown element" id="speed x0.5"><span>X 0.5</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div id="progress">
+                            <div id="progress-bar"style="width:30%">
+                                <div id="progress-ball"></div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+
+
+                </div>
+                
+            </div>
+
+
+        </div>
+
+
+        
+    </div>
+    <script src="dist/main.js"></script>
+</body>
+</html>
