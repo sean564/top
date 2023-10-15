@@ -165,12 +165,13 @@ export class App {
                       .then((response) => response.json())
                       .then(async (data) => {
                         const loader = document.getElementById("loader2");
-                        loader?.classList.toggle("hidden", true);
+                        loader?.classList.toggle("hidden", false);
                         await Loader.timeout(10);
                         this.scene.setPresetData(data.frames, data.knotDivision, data.nodeArr);
                         this._presetPage.preset = true;
-                        loader?.classList.toggle("hidden", false);
                         await Loader.timeout(3000);
+                        loader?.classList.toggle("hidden", true);
+                        await Loader.timeout(10);
                         
                         this.run();
                     }).catch(console.error);
