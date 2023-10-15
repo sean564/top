@@ -232,6 +232,14 @@ export class App {
 
         
         this.camera = new Camera();
+        if(this._presetPage.preset){
+            this.camera.changeBase({
+                theta : 0.7,
+                phi : 0.7,
+                radius : 16,
+                trans : [0,0,0],
+            })
+        }
         this.initCallbacks();
         this.initGL();
         this.resizer();

@@ -22,6 +22,14 @@ export class Camera {
         radius : number;
     };
 
+    private _basePos:{
+        theta : number;
+        phi : number;
+        radius : number;
+        trans : vec3;
+
+    }
+
     private _mView : mat4;
     private _mProj : mat4;
 
@@ -34,12 +42,19 @@ export class Camera {
     private _reset: boolean;
 
 
-    constructor(theta: number = pi/4, phi: number = pi/4, radius : number = 12, transformation : vec3 = [0,0,1.5]) {
+    constructor() {
         
+        this._basePos = {
+            theta : pi/4,
+            phi : pi/4,
+            radius : 12,
+            trans : [0,0,1.5],
+        }
+
         this._spherical = {
-            theta : theta,
-            phi : phi,
-            radius : radius,
+            theta : this._basePos.theta,
+            phi : this._basePos.phi,
+            radius : this._basePos.radius,
         }
 
         this._position = [0,0,0];
@@ -49,7 +64,7 @@ export class Camera {
             normal : [0,0],
             toWorld :  mat4.create(),
         }
-        this._transformation = transformation;
+        this._transformation = this._basePos.trans;
 
         this._mView = mat4.create();
         this._mProj = mat4.create();
@@ -59,6 +74,15 @@ export class Camera {
         
         this.updateCameraPos();
         this.setRay();
+    }
+
+    public changeBase(base: {
+        theta : number;
+        phi : number;
+        radius : number;
+        trans : vec3;
+    }){
+        this._basePos = base;
     }
 
     public update(gl : WebGLRenderingContext, program : WebGLProgram, width : number, height : number) {
@@ -87,9 +111,9 @@ export class Camera {
 
     public resetCam(gl : WebGLRenderingContext, program : WebGLProgram, width : number, height : number){
         const factor = 30;
-        const dtheta = (pi/4 - this._spherical.theta);
-        const dphi =(pi/4 - this._spherical.phi);
-        const drad = (12 - this._spherical.radius);
+        const dtheta = (this._basePos.theta - this._spherical.theta);
+        const dphi =(this._basePos.phi - this._spherical.phi);
+        const drad = (this._basePos.radius - this._spherical.radius);
 
         if((dtheta < -pi) || (dtheta >= 0)){
             this._spherical.theta += Math.sqrt(Math.abs(dtheta))/factor;
@@ -100,7 +124,7 @@ export class Camera {
         this._spherical.phi = Math.min(Math.max(0.0001, this._spherical.phi), pi - 0.0001);
         this._spherical.radius += drad/factor;
 
-        var dtrans = vec3.subtract(vec3.create(), [0,0,1.5], this._transformation);
+        var dtrans = vec3.subtract(vec3.create(), this._basePos.trans, this._transformation);
 
         vec3.scaleAndAdd(this._transformation, this._transformation, dtrans, 1/factor/1.6);
         if(
