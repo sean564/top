@@ -11,8 +11,8 @@ function sin(t: number): number{
 }
 
 const KnotDivision = 600;
-const Radius = 0.3;
-//0.035 for pic
+const Radius = 0.035;
+//0.3 for pic
 export class FourierKnot{
 
     private _cosCoef : vec3[];
