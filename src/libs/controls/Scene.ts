@@ -91,12 +91,9 @@ export class Scene{
         this._freeze = false;
     }
 
-    public NewKnot(){
-        this._knotMenu.sceneSelect();
-    }
 
     public setPresetData(frames : Frames, knotDivision: number, nodeArr : vec3[]){
-        
+        this._knotMenu.sceneType = "Quintuples";
         this.fourierKnot.calcFourierFromLinked(nodeArr);
         this.quintuples.setFrameData(frames, knotDivision);
 

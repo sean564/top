@@ -37,6 +37,7 @@ export class App {
             lastY: number;
         };
         shift: boolean;
+        space: boolean;
     };
 
 
@@ -86,6 +87,7 @@ export class App {
                 lastY: 0,
             },
             shift: false,
+            space: false,
         };
 
         this._fps = {
@@ -154,7 +156,6 @@ export class App {
                         event.returnValue = true;
                     });
                     this._presetPage.preset = false;
-                    this.scene.NewKnot();
                     this.scene.knotMenu.Disable(false);
                     this.run();
                 }else{
@@ -276,6 +277,12 @@ export class App {
             this.scene.linkedKnot.delete();
         }
 
+        if(event.key == " " ||
+        event.code == "Space" ||      
+        event.keyCode == 32 ){
+            this.ui.space = true;
+        }
+
         if((event.key == '=' && event.ctrlKey == true) || (event.key == '-' && event.ctrlKey == true))
         {
             event.preventDefault(); 
@@ -283,6 +290,13 @@ export class App {
     }
     private keyUp(event : KeyboardEvent){
         this.ui.shift = event.shiftKey;
+        if(event.key == " " ||
+        event.code == "Space" ){
+            this.ui.space = false;
+            if(this.scene.sceneType == "Quintuples"){
+                this.scene.quintuples.player.play = !this.scene.quintuples.player.play;
+            }
+        }
     }
         
         

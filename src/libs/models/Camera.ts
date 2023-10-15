@@ -83,6 +83,14 @@ export class Camera {
         trans : vec3;
     }){
         this._basePos = base;
+        this._spherical = {
+            theta : this._basePos.theta,
+            phi : this._basePos.phi,
+            radius : this._basePos.radius,
+        }
+        this._transformation = this._basePos.trans;
+        this.updateCameraPos();
+        this.setRay();
     }
 
     public update(gl : WebGLRenderingContext, program : WebGLProgram, width : number, height : number) {
