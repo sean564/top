@@ -187,7 +187,7 @@ export class Player{
 
     private playBtnResponse() {
         // Play/Pause button
-        this._animation.play = !this._animation.play;
+        this.play = !this.play;
         
 
     }

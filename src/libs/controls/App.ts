@@ -169,7 +169,7 @@ export class App {
                         await Loader.timeout(10);
                         this.scene.setPresetData(data.frames, data.knotDivision, data.nodeArr);
                         this._presetPage.preset = true;
-                        await Loader.timeout(3000);
+                        await Loader.timeout(100);
                         loader?.classList.toggle("hidden", true);
                         await Loader.timeout(10);
                         
