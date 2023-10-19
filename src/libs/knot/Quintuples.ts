@@ -6,7 +6,9 @@ import { Sphere } from "../objects/Sphere"
 import { DropDown, Loader } from "../controls/Overlay"
 
 
-
+// I created {circleRadLimit} number of circles at load, where each circle has major radius 2^((i-5)/10).
+// This is because when we need to stretch the circles to certain major radius, the minor radius only gets streched
+// at most 2^(1/5). 
 const circleRadLimit = 80;
 const GPUloop = 40;
 const pi = Math.PI;
@@ -28,6 +30,8 @@ function mod(n: number, m: number) {
 }
 
 export class Quintuples{
+    // This class holds all the data about circle positions, radius, intercept position, etc.
+    // Setting and getting frames are only for pre-set knots from the menu.
 
     private _frames : Frames;
 
@@ -125,7 +129,8 @@ export class Quintuples{
 
 
 export class Player{
-
+// This class is for the pause button, speed button, and progress bar of animation. 
+    
     private videoControls : HTMLElement;
 
     private playpause : HTMLElement;
@@ -261,8 +266,16 @@ export class Player{
     
 }
 
-export class WebGPUCalc{
 
+
+export class WebGPUCalc{
+    // Class used to calculate the circles.
+    // It first uses the GPU to calculate a list of circles,
+    // then it removes duplicate circles, then it re-runs the circle
+    // calculation on the CPU this time to get more precise numbers,
+    // then it removes duplicate one last time.
+
+    
     private _device! : GPUDevice;
     private _adapter! : GPUAdapter;
 
@@ -314,6 +327,7 @@ export class WebGPUCalc{
 
         
     public async Initialize(){
+        // Checks if WebGPU runs
 
         if (!navigator.gpu) {
             throw new Error('WebGPU not supported.');
@@ -376,8 +390,15 @@ export class WebGPUCalc{
     }
     
     public async findCircles(quintuples : Quintuples, doubleCheck: boolean, maxCircles: number, knotDivision: number, loader : Loader){
+            // Main function used to calculate the circles.
 
+            // GPU only calculates circles on half the red points. The other half are interpolated
+            // from the circles the GPU finds.
+
+
+        
         loader.text = (0).toFixed(1) + " %";
+        // timeout necessary or the loader text gets stuck.
         await Loader.timeout(10);
 
         this._bufferSize = 5985 * 5 * knotDivision/2/GPUloop;
@@ -434,6 +455,8 @@ export class WebGPUCalc{
             temp_data[i] = [];
         }
 
+        // This loop is because the data points are too large to put in one buffer.
+        
         for(let calc_iter = 0; calc_iter < GPUloop; calc_iter++){
 
             const [, tlist] = this.sett_i(knotDivision/2, knotDivision/2/GPUloop, knotDivision/2/GPUloop*calc_iter);
@@ -552,6 +575,8 @@ export class WebGPUCalc{
             temp_data[i] = temp_data[i].slice(0, maxCircles);
             this._calc.ACPolyAve += temp_data[i].length % 2;
 
+            // list of indices with even or odd number of circles, used to double check down below
+            
             ACPolyOpt[temp_data[i].length % 2].push(i);
 
             if(loader.cancel){
@@ -567,6 +592,9 @@ export class WebGPUCalc{
         var tempDoubleCheckData : number[][];
 
 
+        // The circles of half the red points are interpolated from the circles of the other half,
+        // which was calculated using GPU.
+        
         for(let i = 1; i<knotDivision; i+=2){
 
             leftIndex = i-1;
@@ -577,6 +605,7 @@ export class WebGPUCalc{
             }
 
             tempDoubleCheckData = [];
+            
             if(temp_data[leftIndex].length < temp_data[rightIndex].length){
                 maxIndex = rightIndex;
             }else{
@@ -607,6 +636,8 @@ export class WebGPUCalc{
 
         if(doubleCheck){
 
+            // Double checks whether there are correct number of circles for each red dot.
+
             loader.text = "verifying number of circles";
             await Loader.timeout(10);
 
@@ -624,6 +655,8 @@ export class WebGPUCalc{
 
                 maxIndex = leftIndex;
                 let doubiter = 0
+
+                // Finds the index with the most and correct number of circles, which is within 10 steps away from current point
                 
                 do{
                     if(temp_data[leftIndex].length < temp_data[rightIndex].length){
@@ -647,6 +680,8 @@ export class WebGPUCalc{
 
                 tempDoubleCheckData = this.c5_ptolemy(tempDoubleCheckData);
                 temp_data[frameIndex] = this.removeDupe(tempDoubleCheckData, 0.002);
+
+                // Double double check number of circles.
 
                 if(temp_data[frameIndex].length%2 != this._calc.ACPolyAve){
                     doubiter = 0;
@@ -764,6 +799,8 @@ export class WebGPUCalc{
     }
 
     private exportFrame(quintuples : Quintuples, data : number[][][], knotDivision : number, loader : Loader){
+
+        // sets the frame of quintuples.
 
         var c : vec3;
         var n : vec3;
@@ -1198,6 +1235,14 @@ export class WebGPUCalc{
 
     private c5_ptolemy(list : number[][]) : number[][]
     {
+        // Input: array of array of numbers. The first five numbers in the inner array
+        // represent five points on the knot to start the newton's method on.
+        // 
+        // Output: array of array of numbers. The inner array represents each circle found, 
+        // and it includes the radius, position normal vec of the circle and the point of intersection with the knot.
+        // 
+        // Finds circles using Newton's method on gradient of ptolemy inequality.
+        // 
         
         var quint = [];
         const max_iter : number = 250;
@@ -1310,7 +1355,9 @@ export class WebGPUCalc{
                         + grad[2]*diff[2]
                         + grad[3]*diff[3]
                 );
-
+                
+                // Backtracking line search
+                
                 do{
 
                     alpha *= rho;
