@@ -10,7 +10,7 @@
     "serve": "http-server"
   },
   "keywords": [],
-  "author": "",
+  "author": "Sean Lee",
   "license": "ISC",
   "dependencies": {
     "@types/jquery": "^3.5.17",
