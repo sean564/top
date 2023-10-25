@@ -365,7 +365,8 @@ fn hess_compute(x : u32, z_index : u32){
 }
 
 
-
+// Workgroup size is 64 so that it is optimized for both AMD and Nvidia GPU. Each of the 16 entries in the y-axis essentially does the same calculations, and the x-axis is divided into four entries, where each entry does different calculations (e.g. each entry calculates each gradient term). 
+// I found (4,16) to be the most optimal.
 
 @compute @workgroup_size(4,16)
 fn main(
