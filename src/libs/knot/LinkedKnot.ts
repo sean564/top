@@ -10,6 +10,8 @@ const adjacent = 0.25;
 
 export class LinkedKnot{
 
+    // The knots are essentially a doubly linked list. We also have nodeStack and edgeStack to keep track of all the spheres and cylinders created.
+
     private _nodeStack : Stack; 
     private _edgeStack : Stack; 
     private _nodeNum : number;
