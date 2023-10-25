@@ -55,7 +55,7 @@ export class LinkedKnot{
         this._drawingTool = new DrawingTool(this);
         this._drawingTool.initCallback();
 
-        
+        // This is for setting the pre-set knot data
 const input = <HTMLInputElement>document.getElementById("link-data");
 input?.addEventListener('change', async() => {
 
