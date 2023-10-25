@@ -1,1 +1,1 @@
-This folder contains shader files for WebGL and WebGPU (firstCompute.wgsl).
+This folder contains shader files for WebGL (*.glsl) and WebGPU (firstCompute.wgsl).
